@@ -1,0 +1,13 @@
+﻿@model Shop.ViewModel.Shop.ProductViewModel
+
+@using (Ajax.BeginForm("AddItem", "Cart", new { productId = Model.Id }, new AjaxOptions
+{
+    HttpMethod = "POST",
+    OnSuccess = "location.reload()",
+    OnFailure = "alert('Error')"
+}))
+{
+    @Html.AntiForgeryToken()
+
+    <input type="submit" value="Add to cart" class="btn btn-default" />
+}

@@ -1,0 +1,46 @@
+﻿@using Shop.ViewModel.Shop
+@model CartViewModel
+
+@if (Model == null || !Model.Items.Any())
+{
+    return;
+}
+
+<div class="cart">
+    @foreach (var item in Model.Items)
+    {
+        <div>
+            <span>@string.Format("Product: {0}. Price: {1}. Amount: {2}. Subtotal: {3}", item.Title, item.Price, item.Amount, item.Price * item.Amount)</span>
+            @using (Ajax.BeginForm("DeleteItem", "Cart", new { item.ProductId }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "location.reload()",
+                OnFailure = "alert('Error')"
+            }))
+            {
+                @Html.AntiForgeryToken()
+            
+                <input type="submit" value="Delete from cart" class="btn btn-default" />
+            }
+        </div>
+    }
+
+    <div class="clearfix actions">
+        <div class="pull-left">
+            @using (Ajax.BeginForm("Empty", "Cart", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "location.reload()",
+            OnFailure = "alert('Error')"
+        }))
+            {
+                @Html.AntiForgeryToken()
+
+                <input type="submit" value="Empty cart" class="btn btn-default" />
+            }
+        </div>
+        <div class="pull-right">
+            @Html.ActionLink("Checkout", "Index", "Checkout", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+﻿Migration commands:
+
+Add migration:
+Add-Migration **MigrationName** -ConnectionStringName "DatabaseContext" -ProjectName Shop.Repositories -StartUpProjectName Shop.Web -Verbose
+
+Update database to the latest version:
+Update-Database -ConnectionStringName "DatabaseContext" -ProjectName Shop.Repositories -StartUpProjectName Shop.Web -Verbose
+
+Update database to migration:
+Update-Database -ConnectionStringName "DatabaseContext" –TargetMigration: **MigrationName** -ProjectName Shop.Repositories -StartUpProjectName Shop.Web -Verbose
